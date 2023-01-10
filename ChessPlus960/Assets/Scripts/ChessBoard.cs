@@ -33,11 +33,13 @@ public class ThreeFoldCheckClass {
         
 public class ChessBoard : MonoBehaviour
 {
+    private char[] pieces = new char[8];
     public AiManager AiCTR;
     public Material tileMaterial;
     public Material darktileMaterial;
     public ChessPiece currentlyDragging;
     public List<Vector2Int> availableMoves = new List<Vector2Int>();
+    public bool is960 = true;
     private List<ChessPiece> deadWhites = new List<ChessPiece>();
     private List<ChessPiece> deadBlacks = new List<ChessPiece>();
     private List<Vector2Int[]> moveList = new List<Vector2Int[]>();
@@ -491,43 +493,326 @@ string layerName = LayerMask.LayerToName(tiles[currentHover.x, currentHover.y].l
     private void SpawnAllPieces(){
         chessPieces = new ChessPiece[TileCountX, TileCountY];
         int whiteTeam = 0;
-        int blackTeam =1 ;
-        //white team
-        chessPieces[0,0] = SpawnSinglePiece(ChessPieceType.Rook, whiteTeam);
-        chessPieces[1,0] = SpawnSinglePiece(ChessPieceType.Knight, whiteTeam);
-        chessPieces[2,0] = SpawnSinglePiece(ChessPieceType.Bishop, whiteTeam);
-        chessPieces[4,0] = SpawnSinglePiece(ChessPieceType.King, whiteTeam);
-        chessPieces[3,0] = SpawnSinglePiece(ChessPieceType.Queen, whiteTeam);
-        chessPieces[5,0] = SpawnSinglePiece(ChessPieceType.Bishop, whiteTeam);
-        chessPieces[6,0] = SpawnSinglePiece(ChessPieceType.Knight, whiteTeam);
-        chessPieces[7,0] = SpawnSinglePiece(ChessPieceType.Rook, whiteTeam);
-        chessPieces[0,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
-        chessPieces[1,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
-        chessPieces[2,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
-        chessPieces[3,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
-        chessPieces[4,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
-        chessPieces[5,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
-        chessPieces[6,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
-        chessPieces[7,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+        int blackTeam = 1 ;
+        
 
-        chessPieces[0,7] = SpawnSinglePiece(ChessPieceType.Rook, blackTeam);
-        chessPieces[1,7] = SpawnSinglePiece(ChessPieceType.Knight, blackTeam);
-        chessPieces[2,7] = SpawnSinglePiece(ChessPieceType.Bishop, blackTeam);
-        chessPieces[4,7] = SpawnSinglePiece(ChessPieceType.King, blackTeam);
-        chessPieces[3,7] = SpawnSinglePiece(ChessPieceType.Queen, blackTeam);
-        chessPieces[5,7] = SpawnSinglePiece(ChessPieceType.Bishop, blackTeam);
-        chessPieces[6,7] = SpawnSinglePiece(ChessPieceType.Knight, blackTeam);
-        chessPieces[7,7] = SpawnSinglePiece(ChessPieceType.Rook, blackTeam);
-        chessPieces[0,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
-        chessPieces[1,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
-        chessPieces[2,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
-        chessPieces[3,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
-        chessPieces[4,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
-        chessPieces[5,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
-        chessPieces[6,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
-        chessPieces[7,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+        if (is960)
+        {
+            List<ChessPiece> whiteTeamRandom = new List<ChessPiece>(8);
+            List<ChessPiece> blackTeamRandom = new List<ChessPiece>(8);
+            string whiteTeamList = Randomize960();
+            string blackTeamList = Randomize960();
+            whiteTeamRandom = CreateFromList(whiteTeamRandom, whiteTeamList, "white");
+            blackTeamRandom = CreateFromList(blackTeamRandom, blackTeamList, "black");
 
 
+            //white team
+            chessPieces[0, 0] = whiteTeamRandom[0];
+            chessPieces[1, 0] = whiteTeamRandom[1];
+            chessPieces[2, 0] = whiteTeamRandom[2];
+            chessPieces[4, 0] = whiteTeamRandom[3];
+            chessPieces[3, 0] = whiteTeamRandom[4];
+            chessPieces[5, 0] = whiteTeamRandom[5];
+            chessPieces[6, 0] = whiteTeamRandom[6];
+            chessPieces[7, 0] = whiteTeamRandom[7];
+            chessPieces[0, 1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[1, 1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[2, 1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[3, 1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[4, 1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[5, 1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[6, 1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[7, 1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+
+            //black team
+            chessPieces[0, 7] = blackTeamRandom[0];
+            chessPieces[1, 7] = blackTeamRandom[1];
+            chessPieces[2, 7] = blackTeamRandom[2];
+            chessPieces[4, 7] = blackTeamRandom[3];
+            chessPieces[3, 7] = blackTeamRandom[4];
+            chessPieces[5, 7] = blackTeamRandom[5];
+            chessPieces[6, 7] = blackTeamRandom[6];
+            chessPieces[7, 7] = blackTeamRandom[7];
+            chessPieces[0, 6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[1, 6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[2, 6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[3, 6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[4, 6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[5, 6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[6, 6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[7, 6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+        }
+        else
+        {
+            //white team
+            chessPieces[0,0] = SpawnSinglePiece(ChessPieceType.Rook, whiteTeam);
+            chessPieces[1,0] = SpawnSinglePiece(ChessPieceType.Knight, whiteTeam);
+            chessPieces[2,0] = SpawnSinglePiece(ChessPieceType.Bishop, whiteTeam);
+            chessPieces[4,0] = SpawnSinglePiece(ChessPieceType.King, whiteTeam);
+            chessPieces[3,0] = SpawnSinglePiece(ChessPieceType.Queen, whiteTeam);
+            chessPieces[5,0] = SpawnSinglePiece(ChessPieceType.Bishop, whiteTeam);
+            chessPieces[6,0] = SpawnSinglePiece(ChessPieceType.Knight, whiteTeam);
+            chessPieces[7,0] = SpawnSinglePiece(ChessPieceType.Rook, whiteTeam);
+            chessPieces[0,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[1,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[2,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[3,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[4,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[5,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[6,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+            chessPieces[7,1] = SpawnSinglePiece(ChessPieceType.Pawn, whiteTeam);
+
+            //black team
+            chessPieces[0,7] = SpawnSinglePiece(ChessPieceType.Rook, blackTeam);
+            chessPieces[1,7] = SpawnSinglePiece(ChessPieceType.Knight, blackTeam);
+            chessPieces[2,7] = SpawnSinglePiece(ChessPieceType.Bishop, blackTeam);
+            chessPieces[4,7] = SpawnSinglePiece(ChessPieceType.King, blackTeam);
+            chessPieces[3,7] = SpawnSinglePiece(ChessPieceType.Queen, blackTeam);
+            chessPieces[5,7] = SpawnSinglePiece(ChessPieceType.Bishop, blackTeam);
+            chessPieces[6,7] = SpawnSinglePiece(ChessPieceType.Knight, blackTeam);
+            chessPieces[7,7] = SpawnSinglePiece(ChessPieceType.Rook, blackTeam);
+            chessPieces[0,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[1,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[2,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[3,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[4,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[5,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[6,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+            chessPieces[7,6] = SpawnSinglePiece(ChessPieceType.Pawn, blackTeam);
+
+        }
+
+
+    }
+
+    private List<ChessPiece> CreateFromList(List<ChessPiece> saveTo, string createFrom, string team)
+    {
+        string pieceType;
+        foreach(char c in createFrom)
+        {
+            saveTo.Add(getPieceType(c,team));
+        }
+
+        return saveTo;
+    }
+
+    private ChessPiece getPieceType(char c, string team)
+    {
+        int teamNum;
+        if(team == "black")
+        {
+            teamNum = 1;
+        }
+        else
+        {
+            teamNum = 0;
+        }
+        switch (c)
+        {
+            case 'k':
+                return SpawnSinglePiece(ChessPieceType.King,teamNum);
+                break;
+            case 'q':
+                return SpawnSinglePiece(ChessPieceType.Queen, teamNum);
+                break;
+            case 'h':
+                return SpawnSinglePiece(ChessPieceType.Knight, teamNum);
+                break;
+            case 'r':
+                return SpawnSinglePiece(ChessPieceType.Rook, teamNum);
+                break;
+            case 'b':
+                return SpawnSinglePiece(ChessPieceType.Bishop, teamNum);
+                break;
+        }
+
+        return SpawnSinglePiece(ChessPieceType.Bishop, teamNum);
+    }
+
+    private string Randomize960()
+    {
+        int randNum1;
+        int randNum2;
+        bool spaceForKing = false;
+
+        ArrayList slots = new ArrayList();
+
+        for (int i = 0; i < pieces.Length; i++)
+        {
+            pieces[i] = '-';
+        }
+
+        for (int i = 0; i < 8; i++)
+        {
+            slots.Add(i);
+        }
+
+        //places the first rook
+        randNum1 = getRandomNum(0, slots.Count - 1);
+        randNum1 = (int)slots[randNum1];
+        pieces[randNum1] = 'r';
+        slots.Remove(randNum1);
+
+        //places the second rook with at least 1 space for the king in between
+        do
+        {
+            randNum2 = getRandomNum(0, slots.Count - 1);
+            randNum2 = (int)slots[randNum2];
+            spaceForKing = findAvailableSpace(randNum2);
+
+        } while (pieces[randNum2].Equals('-') == false || spaceForKing == false);
+
+        pieces[randNum2] = 'r';
+        slots.Remove(randNum2);
+
+        //Adds the king in between the two rooks
+        if (Mathf.Abs(randNum1 - randNum2) == 2)
+        {
+            if (randNum1 < randNum2)
+            {
+                pieces[randNum1 + 1] = 'k';
+                slots.Remove(randNum1 + 1);
+            }
+            else
+            {
+                pieces[randNum2 + 1] = 'k';
+                slots.Remove(randNum2 + 1);
+            }
+        }
+        else
+        {
+            int randNum3;
+
+            if (randNum1 < randNum2)
+            {
+                randNum3 = getRandomNum(randNum1 + 1, randNum2 - 1);
+            }
+            else
+            {
+                randNum3 = getRandomNum(randNum2 + 1, randNum1 - 1);
+            }
+
+            pieces[randNum3] = 'k';
+            slots.Remove(randNum3);
+        }
+
+        //places the even bishop
+        do
+        {
+            randNum2 = getRandomNum(0, slots.Count - 1);
+            randNum2 = (int)slots[randNum2];
+
+        }
+        while (randNum2 % 2 == 1 || pieces[randNum2] != '-');
+
+        pieces[randNum2] = 'b';
+        slots.Remove(randNum2);
+
+        //adds the odd Bishop
+        do
+        {
+            randNum1 = getRandomNum(0, slots.Count - 1);
+            randNum1 = (int)slots[randNum1];
+        }
+        while (randNum1 % 2 == 0 || pieces[randNum1] != '-');
+
+        pieces[randNum1] = 'b';
+        slots.Remove(randNum1);
+
+        //place the final pieces on the board
+        List<char> finalPieces = new List<char>();
+        char piece = 'o';
+        finalPieces.Add('q');
+        finalPieces.Add('h');
+        finalPieces.Add('h');
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (slots.Count == 2)
+            {
+                randNum1 = getRandomNum(0, 1);
+                randNum2 = getRandomNum(0, 1);
+            }
+            else
+            {
+                randNum1 = getRandomNum(0, 2);
+                randNum2 = getRandomNum(0, 2);
+            }
+
+            piece = finalPieces[randNum1];
+            int temp = (int)slots[randNum2];
+            pieces[temp] = piece;
+            finalPieces.RemoveAt(randNum1);
+            slots.RemoveAt(randNum2);
+        }
+
+        pieces[(int)slots[0]] = finalPieces[0];
+
+
+        return PrintList();
+    }
+
+    private string PrintList()
+    {
+        string toPrint = "";
+        foreach (char c in pieces)
+        {
+            toPrint += c;
+        }
+        
+        return toPrint;
+    }
+
+    private int getRandomNum(int min, int max)
+    {
+        return Random.Range(min, max);
+    }
+
+    private bool findAvailableSpace(int randomNum)
+    {
+        bool result = false;
+        int firstNum = -1;
+
+        for (int i = 0; i < pieces.Length; i++)
+        {
+            if (pieces[i] == 'r')
+            {
+                firstNum = i;
+            }
+        }
+
+        if (firstNum < randomNum)
+        {
+            firstNum++;
+            if (firstNum != randomNum)
+            {
+                for (int i = firstNum; i < randomNum; i++)
+                {
+                    if (pieces[i] == '-')
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            randomNum++;
+            if (randomNum != firstNum)
+            {
+                for (int i = randomNum; i < firstNum; i++)
+                {
+                    if (pieces[i] == '-')
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 
     private void PositionAllPieces(){
